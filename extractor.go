@@ -7,6 +7,8 @@ import (
 	"log"
 	"strconv"
 	"strings"
+
+	"golang.org/x/net/html/charset"
 )
 
 const XML_NAMESPACE_ACRONYM = "xmlns"
@@ -63,6 +65,7 @@ func (ex *Extractor) extract(reader io.Reader) error {
 		return errors.New("extractor not properly initted: must run extractor.init() first")
 	}
 	decoder := xml.NewDecoder(reader)
+	decoder.CharsetReader = charset.NewReaderLabel
 
 	for {
 		token, err := decoder.Token()
